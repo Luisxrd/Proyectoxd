@@ -1,0 +1,38 @@
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+
+# Crear la aplicación y el widget principal
+app = QApplication([])
+ventana = QWidget()
+ventana.setWindowTitle('Maquina')
+
+# Crear los botones
+boton1 = QPushButton('Corte automatico')
+boton2 = QPushButton('Corte manual')
+boton3 = QPushButton('Apagar')
+
+estilo_botones = '''
+    QPushButton {
+        color: black;
+        font-size: 16px;
+        text-align: center;
+        margin: 4px;
+        padding: 8px;
+    }
+'''
+
+boton1.setStyleSheet(estilo_botones)
+boton2.setStyleSheet(estilo_botones)
+boton3.setStyleSheet(estilo_botones)
+
+# Crear un layout vertical y agregar los botones
+layout = QVBoxLayout()
+layout.addWidget(boton1)
+layout.addWidget(boton2)
+layout.addWidget(boton3)
+
+# Establecer el layout en el widget principal
+ventana.setLayout(layout)
+
+# Mostrar la ventana y ejecutar la aplicación
+ventana.show()
+app.exec_() 
