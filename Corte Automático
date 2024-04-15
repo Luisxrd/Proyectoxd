@@ -1,0 +1,54 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit, QFrame, QGridLayout
+
+class MiVentana(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        # Crear botones para el lado izquierdo
+        boton1 = QPushButton('Botón 1')
+        boton2 = QPushButton('Botón 2')
+        boton3 = QPushButton('Botón 3')
+
+        # Crear campos de texto
+        campoTexto1 = QLineEdit()
+        campoTexto2 = QLineEdit()
+        campoTexto3 = QLineEdit()
+        campoTexto4 = QLineEdit()
+
+        # Crear un QFrame como contenedor
+        frame = QFrame()
+        frame.setFrameShape(QFrame.StyledPanel)
+        frame.setLineWidth(1)
+
+        # Crear un QGridLayout para el contenedor
+        grid = QGridLayout(frame)
+        grid.addWidget(campoTexto1, 0, 0)
+        grid.addWidget(campoTexto2, 0, 1)
+        grid.addWidget(campoTexto3, 1, 0)
+        grid.addWidget(campoTexto4, 1, 1)
+
+        # Crear layout vertical para los botones del lado izquierdo
+        vboxBotones = QVBoxLayout()
+        vboxBotones.addWidget(boton1)
+        vboxBotones.addWidget(boton2)
+        vboxBotones.addWidget(boton3)
+
+        # Crear layout horizontal para toda la ventana
+        hbox = QHBoxLayout(self)
+        hbox.addLayout(vboxBotones)
+        hbox.addWidget(frame)
+
+        self.setLayout(hbox)
+        self.setWindowTitle('Interfaz con PyQt5')
+        self.show()
+
+def main():
+    app = QApplication(sys.argv)
+    ventana = MiVentana()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
