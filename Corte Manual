@@ -1,0 +1,29 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtGui import QColor
+
+class VentanaSecundaria(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Corte Manual")
+        self.setGeometry(100, 100, 300, 200)
+
+        layout = QVBoxLayout()
+
+        boton_encender = QPushButton('Encender cortadora')
+        boton_encender.setStyleSheet("background-color: #eef6b0;")
+        layout.addWidget(boton_encender)
+
+        boton_apagar = QPushButton('Apagar cortadora')
+        boton_apagar.setStyleSheet("background-color:#eef6b0;")
+        layout.addWidget(boton_apagar)
+
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = VentanaSecundaria()
+    window.show()
+    sys.exit(app.exec_())
