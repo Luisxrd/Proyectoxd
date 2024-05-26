@@ -1,0 +1,59 @@
+from PyQt5.QtWidgets import QApplication, QVBoxLayout, QPushButton, QWidget, QMessageBox
+from PyQt5.QtCore import Qt
+from CorteAutomatico import VentanaSecundaria
+
+
+class VentanaSecundaria(QWidget):
+    def __init__(self, titulo):
+        super().__init__()
+        self.setWindowTitle(titulo)
+        self.setGeometry(100, 100, 200, 100)
+        self.show()
+
+class VentanaCompleta(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        layout = QVBoxLayout()
+        layout.setSpacing(15)
+
+        # Botón para Corte Automático
+        boton1 = QPushButton('Corte Automático')
+        boton1.setFixedSize(600, 250)
+        boton1.setStyleSheet("font-size: 24px;background-color: #008631; color: white;")
+        boton1.clicked.connect(self.abrirVentanaCorteAutomatico)
+        layout.addWidget(boton1, alignment=Qt.AlignCenter)
+
+        # Botón para Corte Manual
+        boton2 = QPushButton('Corte Manual')
+        boton2.setFixedSize(600, 250)
+        boton2.setStyleSheet("font-size: 24px; background-color: #0057C2; color: white;")
+        boton2.clicked.connect(self.abrirVentanaCorteManual)
+        layout.addWidget(boton2, alignment=Qt.AlignCenter)
+
+        # Botón para Apagar
+        boton3 = QPushButton('Apagar')
+        boton3.setFixedSize(600, 250)
+        boton3.setStyleSheet("font-size: 24px; background-color: #DB0000; color: white;")
+        boton3.clicked.connect(self.apagarSistema)
+        layout.addWidget(boton3, alignment=Qt.AlignCenter)
+
+        self.setLayout(layout)
+        self.showFullScreen()
+
+    def abrirVentanaCorteAutomatico(self):
+        self.ventana_secundaria = VentanaSecundaria('Corte Automático')
+        
+        
+    def abrirVentanaCorteManual(self):
+        self.ventana_secundaria = VentanaSecundaria('Corte Manual')
+
+    def apagarSistema(self):
+        QMessageBox.information(self, 'Apagar', 'El sistema se apagará.')
+
+if __name__ == '__main__':
+    app = QApplication([])
+    ventana = VentanaCompleta()
+    app.exec_()
