@@ -1,0 +1,61 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QDialog, QLineEdit
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Corte Automático")
+        self.setGeometry(100, 100, 300, 200)
+
+        layout = QVBoxLayout()
+        boton1 = QPushButton('Centímetros')
+        boton1.setStyleSheet("background-color: #eef6b0;")
+        boton1.clicked.connect(self.mostrar_ventana_centimetros)
+        layout.addWidget(boton1)
+
+        boton2 = QPushButton('Repeticiones')
+        boton2.setStyleSheet("background-color: #eef6b0;")
+        boton2.clicked.connect(self.mostrar_ventana_repeticiones)
+        layout.addWidget(boton2)
+
+        boton3 = QPushButton('Pausa')
+        boton3.setStyleSheet("background-color: #eef6b0;")
+        layout.addWidget(boton3)
+
+        boton4 = QPushButton('Play')
+        boton4.setStyleSheet("background-color: #eef6b0;")
+        layout.addWidget(boton4)
+
+        boton5 = QPushButton('Regresar al menú principal')
+        boton5.setStyleSheet("background-color: #eef6b0;")
+        layout.addWidget(boton5)
+
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
+    def mostrar_ventana_centimetros(self):
+        ventana_centimetros = VentanaSecundaria("Centímetros")
+        ventana_centimetros.exec_()
+
+    def mostrar_ventana_repeticiones(self):
+        ventana_repeticiones = VentanaSecundaria("Repeticiones")
+        ventana_repeticiones.exec_()
+
+class VentanaSecundaria(QDialog):
+    def __init__(self, titulo):
+        super().__init__()
+        self.setWindowTitle(titulo)
+        self.setGeometry(200, 200, 200, 100)
+
+        layout = QVBoxLayout()
+        self.cuadro_texto = QLineEdit()
+        layout.addWidget(self.cuadro_texto)
+
+        self.setLayout(layout)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
