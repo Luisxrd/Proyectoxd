@@ -1,0 +1,104 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QMessageBox, QDialog, QLineEdit, QMenu, QAction
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Sistema de Control de Corte")
+        self.showFullScreen()
+
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        layout = QVBoxLayout()
+        #layout.addStretch()
+
+        btn_corte_manual = QPushButton("Corte Manual")
+        btn_corte_manual.setStyleSheet("font-size: 40px; background-color: #0057C2;")
+        btn_corte_manual.setFixedSize(1000, 250)
+        btn_corte_manual.clicked.connect(self.open_corte_manual)
+        layout.addWidget(btn_corte_manual)
+
+        btn_corte_automatico = QPushButton("Corte Automático")
+        btn_corte_automatico.setStyleSheet("font-size: 40px; background-color: #008631;")
+        btn_corte_automatico.setFixedSize(1000, 250)
+        btn_corte_automatico.clicked.connect(self.open_corte_automatico)
+        layout.addWidget(btn_corte_automatico)
+
+        btn_apagar = QPushButton("Apagar")
+        btn_apagar.setStyleSheet("font-size: 40px; background-color: #DB0000")
+        btn_apagar.setFixedSize(1000, 250)
+        btn_apagar.clicked.connect(self.show_warning)
+        layout.addWidget(btn_apagar)
+
+        #layout.addStretch() 
+        central_widget.setLayout(layout)
+
+    def show_warning(self):
+        QMessageBox.warning(self, "Advertencia", "¿Estás seguro de que quieres apagar la máquina?")
+
+    def open_corte_manual(self):
+        self.corte_manual_window = QDialog(self)
+        self.corte_manual_window.setWindowTitle("Corte Manual")
+
+        layout = QVBoxLayout()
+
+        btn_encender = QPushButton("Encender cortadora")
+        btn_encender.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        layout.addWidget(btn_encender)
+
+        btn_apagar = QPushButton("Apagar cortadora")
+        btn_apagar.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        layout.addWidget(btn_apagar)
+
+        self.corte_manual_window.setLayout(layout)
+        self.corte_manual_window.exec_()
+
+    def open_corte_automatico(self):
+        self.corte_automatico_window = QDialog(self)
+        self.corte_automatico_window.setWindowTitle("Corte Automático")
+
+        layout = QVBoxLayout()
+
+        centimetros_menu = QMenu(self)
+        for cm in [2, 4, 6, 8]:
+            action = QAction(f"{cm} cm", self)
+            centimetros_menu.addAction(action)
+
+        btn_centimetros = QPushButton("Centímetros", self)
+        btn_centimetros.setMenu(centimetros_menu)
+        btn_centimetros.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        layout.addWidget(btn_centimetros)
+
+        repeticiones_menu = QMenu(self)
+        for rep in range(1, 6):
+            action = QAction(f"{rep}", self)
+            repeticiones_menu.addAction(action)
+
+        btn_repeticiones = QPushButton("Repeticiones", self)
+        btn_repeticiones.setMenu(repeticiones_menu)
+        btn_repeticiones.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        layout.addWidget(btn_repeticiones)
+
+        btn_pausa = QPushButton("Pausa")
+        btn_pausa.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        layout.addWidget(btn_pausa)
+
+        btn_regresar = QPushButton("Regresar al menú principal")
+        btn_regresar.setStyleSheet("font-size: 24px; background-color: #eef6b0;")
+        btn_regresar.clicked.connect(self.close_corte_automatico_window)
+        layout.addWidget(btn_regresar)
+
+        self.corte_automatico_window.setLayout(layout)
+        self.corte_automatico_window.exec_()
+
+    def close_corte_automatico_window(self):
+        self.corte_automatico_window.close()
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
